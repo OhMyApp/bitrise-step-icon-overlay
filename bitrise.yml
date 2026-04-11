@@ -22,6 +22,7 @@ workflows:
         inputs:
         - iconsbundle_name: "AppIcon.appiconset"
         - overlay_text: "beefabae004"
+        #- font: "/System/Library/Fonts/Supplemental/Zapfino.ttf"
           
   # ----------------------------------------------------------------
   # --- workflows to Share this step into a Step Library

@@ -41,6 +41,13 @@ inputs:
       description: "The first six characters of this text will be displayed at the bottom on top of the app's icon image"
       is_expand: true
       is_required: true
+  - font:
+    opts:
+      title: "Font"
+      summary: "The font used for the text."
+      description: "By default Arial will be used on MacOS and DejaVu on Ubuntu."
+      is_expand: true
+      is_required: false
  
 outputs:
  

@@ -101,12 +101,22 @@ echo_info "Configs:"
 echo_details "* iconsbundle_name: $iconsbundle_name"
 echo_details "* project_location: $project_location"
 echo_details "* overlay_text: $overlay_text"
+echo_details "* font: $font"
 echo
 
 validate_required_input "iconsbundle_name" $iconsbundle_name
 validate_required_input "project_location" $project_location
 validate_required_input "overlay_text" $overlay_text
 
+# Set font
+if [[ "$(uname)" == "Darwin" ]]; then
+  default_font="/System/Library/Fonts/Supplemental/Arial.ttf"
+elif [[ "$(uname)" == "Linux" ]]; then
+  default_font="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+fi
+
+font="${font:-$default_font}"
+echo_info "Will use font: $font"
 
 # this expansion is required for paths with ~
 #  more information: http://stackoverflow.com/questions/3963716/how-to-manually-expand-a-special-variable-ex-tilde-in-bash
@@ -136,6 +146,7 @@ find "$project_location" -type d -name "$iconsbundle_name" | while read -r image
 
     convert -background '#0008' \
       -fill white \
+      -font "${font}" \
       -gravity center \
       -size "${width}x${overlay_height}" \
       caption:"${overlay}" \
