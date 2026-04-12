@@ -6,7 +6,7 @@ source_code_url: https://github.com/OhMyApp/bitrise-step-icon-overlay
 support_url: https://github.com/OhMyApp/bitrise-step-icon-overlay/issues
 project_type_tags:
   - ios
-  - android
+  - xamarin
 type_tags:
   - utility
 is_requires_admin_user: true
@@ -40,11 +40,11 @@ inputs:
       description: "The first six characters of this text will be displayed at the bottom on top of the app's icon image"
       is_expand: true
       is_required: true
-  - font:
+  - font: "/System/Library/Fonts/Supplemental/Arial.ttf"
     opts:
       title: "Font"
       summary: "The font used for the text."
-      description: "By default Arial will be used on MacOS and DejaVu on Ubuntu."
+      description: "Arial by default."
       is_expand: true
       is_required: false
  
