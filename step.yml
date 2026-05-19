@@ -6,7 +6,6 @@ source_code_url: https://github.com/OhMyApp/bitrise-step-icon-overlay
 support_url: https://github.com/OhMyApp/bitrise-step-icon-overlay/issues
 project_type_tags:
   - ios
-  - xamarin
 type_tags:
   - utility
 is_requires_admin_user: true
