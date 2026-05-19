@@ -1,6 +1,6 @@
 # Icon Overlay
 
-This step allow to print any text on top of the app's icon in order to distinguish different builds.
+This step allows printing any text on top of the app's icon in order to distinguish between different builds.
 
 Before | After
 -|-
