@@ -1,4 +1,4 @@
-title: "Icon overlay"
+title: "Add iOS icon overlay"
 summary: "This step allow to print any text on top of the app's icon in order to distinguish different builds"
 description: ''
 website: https://github.com/OhMyApp/bitrise-step-icon-overlay
