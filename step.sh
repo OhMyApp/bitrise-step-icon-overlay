@@ -125,34 +125,61 @@ echo_info "Setting up app icon's overlay"
 
 trimmed_overlay=`echo $overlay_text | cut -c1-6`
 
-find "$project_location" -type d -name "$iconsbundle_name" | while read -r image_files; do
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-  cd "${image_files}"
-  [[ $(ls -A *.png) ]] || echo_fail "Xcasset present but empty. Forgot to add app icons?"
+# Stamps the trimmed caption at the bottom of a single PNG, in place.
+function overlay_png {
+  base_file="$1"
+  target_file="${base_file}_temp"
 
-  export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-  for base_file in *.png; do
-    overlay="$trimmed_overlay"
-    echo_info "- Processing icon at: $base_file"
-    target_file="${base_file}_temp"
+  width=`identify -format %w "${base_file}"`
+  height=`identify -format %h "${base_file}"`
+  # Bar height is derived from the icon height so it stays proportional on
+  # both square (iOS) and 1.67:1 (tvOS) icons.
+  overlay_height=`echo "${height}/2.85" | bc`
 
-    width=`identify -format %w "${base_file}"`
-    overlay_height=`echo "${width}/2.85" | bc`
+  magick -background '#0008' \
+    -fill white \
+    -font "${font}" \
+    -gravity center \
+    -size "${width}x${overlay_height}" \
+    caption:"${trimmed_overlay}" \
+    "${base_file}" +swap \
+    -gravity south \
+    -composite \
+    "${target_file}"
 
-    magick -background '#0008' \
-      -fill white \
-      -font "${font}" \
-      -gravity center \
-      -size "${width}x${overlay_height}" \
-      caption:"${overlay}" \
-      "${base_file}" +swap \
-      -gravity south \
-      -composite \
-      "${target_file}"
+  rm "${base_file}"
+  mv "${target_file}" "${base_file}"
+}
 
-    rm "$base_file"
-    mv "$target_file" "$base_file"
-  done
-  cd -
+find "$project_location" -type d -name "$iconsbundle_name" | while read -r icon_bundle; do
+  case "$iconsbundle_name" in
+  *.brandassets)
+    # tvOS layered icon: stamp the top-most (Front) layer of every imagestack,
+    # so the caption sits above the composited parallax icon.
+    front_imagesets=`find "$icon_bundle" -type d -path "*.imagestack/Front.imagestacklayer/Content.imageset"`
+    [ -n "$front_imagesets" ] || echo_fail "No Front.imagestacklayer found in ${icon_bundle}. Is it a valid tvOS .brandassets?"
+
+    echo "$front_imagesets" | while read -r imageset; do
+      stamped="0"
+      for base_file in "${imageset}"/*.png; do
+        [ -e "${base_file}" ] || continue
+        stamped="1"
+        echo_info "- Processing tvOS layer icon at: ${base_file}"
+        overlay_png "${base_file}"
+      done
+      [ "${stamped}" == "1" ] || echo_warn "No PNG in ${imageset}, skipping."
+    done
+    ;;
+  *)
+    # iOS icon set: stamp every icon PNG directly inside the bundle.
+    [[ $(ls -A "${icon_bundle}"/*.png 2>/dev/null) ]] || echo_fail "Xcasset present but empty. Forgot to add app icons?"
+    for base_file in "${icon_bundle}"/*.png; do
+      echo_info "- Processing icon at: ${base_file}"
+      overlay_png "${base_file}"
+    done
+    ;;
+  esac
 done
 
