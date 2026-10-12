@@ -1,11 +1,19 @@
-title: "Add iOS icon overlay"
+title: "Add iOS/tvOS icon overlay"
 summary: "This step allow to print any text on top of the app's icon in order to distinguish different builds"
-description: ''
+description: |-
+  Prints a short caption at the bottom of the app icon so testers can tell
+  builds apart at a glance.
+
+  Supports both:
+  - iOS `.appiconset` — every icon PNG is stamped.
+  - tvOS `.brandassets` — the top-most (Front) layer of each `.imagestack`
+    is stamped, so the caption sits above the composited parallax icon.
 website: https://github.com/OhMyApp/bitrise-step-icon-overlay
 source_code_url: https://github.com/OhMyApp/bitrise-step-icon-overlay
 support_url: https://github.com/OhMyApp/bitrise-step-icon-overlay/issues
 project_type_tags:
   - ios
+  - tvos
 type_tags:
   - utility
 is_requires_admin_user: true
@@ -21,8 +29,11 @@ inputs:
   - iconsbundle_name: 'AppIcon.appiconset'
     opts:
       title: "Icon bundle name"
-      summary: The name of the appiconset file inside the xcasset.
-      description: The name of the appiconset file including the extension '.appiconset'
+      summary: The name of the icon bundle inside the xcasset.
+      description: |-
+        The name of the icon bundle including its extension.
+        Use an `.appiconset` for iOS (e.g. `AppIcon.appiconset`) or a
+        `.brandassets` for tvOS (e.g. `AppIcon.brandassets`).
       is_expand: true
       is_required: true
   - project_location: '.'
