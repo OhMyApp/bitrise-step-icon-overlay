@@ -33,7 +33,8 @@ inputs:
       description: |-
         The name of the icon bundle including its extension.
         Use an `.appiconset` for iOS (e.g. `AppIcon.appiconset`) or a
-        `.brandassets` for tvOS (e.g. `AppIcon.brandassets`).
+        `.brandassets` for tvOS (Xcode's default name is
+        `App Icon & Top Shelf Image.brandassets`, spaces included).
       is_expand: true
       is_required: true
   - project_location: '.'

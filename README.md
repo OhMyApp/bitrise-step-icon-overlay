@@ -16,7 +16,7 @@ Add this step in your `bitrise.yml` and customize those values:
 
 | Attribute | Description | Default value |
 |---|---|---|
-| `iconsbundle_name` | The name of your icon bundle: `.appiconset` (iOS) or `.brandassets` (tvOS) | `AppIcon.appiconset` |
+| `iconsbundle_name` | The name of your icon bundle: `.appiconset` (iOS) or `.brandassets` (tvOS, Xcode's default is `App Icon & Top Shelf Image.brandassets`, spaces included) | `AppIcon.appiconset` |
 | `project_location` | Folder where the project and the asset files are stored in the repository. | `.` |
 | `overlay_text` | The text to print over the app icon (6 characters maximum). | `$BITRISE_GIT_COMMIT` |
 | `font` | The font used for the text. | `/System/Library/Fonts/Supplemental/Arial.ttf` |

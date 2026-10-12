@@ -29,7 +29,18 @@ workflows:
         - iconsbundle_name: "AppIcon.appiconset"
         - overlay_text: "beefabae004"
         #- font: "/System/Library/Fonts/Supplemental/Zapfino.ttf"
-          
+
+  test-tvos:
+    steps:
+    - path::./:
+        title: Step Test (tvOS)
+        description: ''
+        run_if: true
+        inputs:
+        - iconsbundle_name: "App Icon & Top Shelf Image.brandassets"
+        - project_location: "./fixture/TestTV"
+        - overlay_text: "beefabae004"
+
   # ----------------------------------------------------------------
   # --- workflows to Share this step into a Step Library
   audit-this-step:
