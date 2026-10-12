@@ -4,7 +4,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   - BITRISE_STEP_ID: bitrise-step-icon-overlay
-  - BITRISE_STEP_VERSION: "2.0.0"
+  - BITRISE_STEP_VERSION: "2.1.0"
   - BITRISE_STEP_GIT_CLONE_URL: https://github.com/OhMyApp/bitrise-step-icon-overlay.git
 
 workflows:
